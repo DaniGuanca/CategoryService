@@ -9,14 +9,22 @@ namespace CategoryService.Data
     {
         public CategoryContext(DbContextOptions<CategoryContext> options) : base(options) 
         {
-            var dbCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
-            if (dbCreator != null )
+            try
             {
-                if (!dbCreator.CanConnect())
-                    dbCreator.Create();
+                var dbCreator = Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                if (dbCreator != null )
+                {
+                    if (!dbCreator.CanConnect())
+                        dbCreator.Create();
 
-                if(!dbCreator.HasTables())
-                    dbCreator.CreateTables();
+                    if(!dbCreator.HasTables())
+                        dbCreator.CreateTables();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: CategoryContext.cs, CategoryContext");
+                Console.WriteLine(ex.Message);
             }
 
         }
