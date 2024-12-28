@@ -1,0 +1,12 @@
+services:
+  categoryservice:
+    container_name: CategoryService
+    image: ${DOCKER_REGISTRY-}categoryservice
+    build:
+      context: .
+      dockerfile: CategoryService/Dockerfile
+    ports:
+        - 4001:8081
+    volumes:
+        - ./CategoryDb:/app/db
+  
